@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content%}
+<div class="row">
+    <div class='col-sm-3'>
+        <h4 class='text-center alert alert-info'>Add New Student</h4>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{form}}
+            <br>
+            <input type="submit" class="btn btn-success" value="Add">
+        </form>
+    </div>
+    <div class="col-sm-8">
+        <h4 class="text-center alert alert-info">Show Student Information</h4>
+        <div class="md-form active-pink active-pink-2 mb-3 mt-0">
+            
+            <form action="/fetch" method="GET" class="d-inline">
+
+                <input class="form-control" name='q' type="text" placeholder="Search" aria-label="Search">
+                <input type="submit" class="btn btn-danger" value="Search">
+            </form>
+        </div>
+        
+        {% if stu %}
+        <table class="table table-hover" id='myDIV' >
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Password</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for st in stu %}
+                <tr>
+                    <th scope="row">{{st.id}}</th>
+                    <td>{{st.name}}</td>
+                    <td>{{st.email}}</td>
+                    <td>@{{st.password}}</td>
+                    <td>
+                        <a href="{%url 'update_data' st.id %}" class="btn btn-warning btn-sm ">Edit</a>
+                        <form action="{% url 'delete_data' st.id %}" method="POST" class="d-inline">
+                            {% csrf_token %}
+                            <input type="submit" class="btn btn-danger" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% endif%}
+    </div>
+    <div class="col-sm-1">
+        <br>
+        <button class="btn btn-warning btn-sm btn btn-danger" onclick="myFunction()">Fetch</button>
+    </div>
+</div>
+{% endblock content %}
