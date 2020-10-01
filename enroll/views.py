@@ -55,5 +55,5 @@ def hide(request):
 
 def fetch(request):
     fet=request.GET['q']
-    st=User.objects.get(name=fet)
+    st=User.objects.all().filter(name='q')
     return render(request,'add_show.html', {'stu':st,'fet':fet})
