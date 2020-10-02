@@ -23,5 +23,8 @@ urlpatterns = [
     path('delete/<int:id>', views.delete_data , name='delete_data'),
     path('<int:id>/', views.update_data , name='update_data'),
     path('fetch', views.fetch, name='fetch'),
-    path('hide', views.hide, name='hide')
+    path('hide', views.hide, name='hide'),
+    path('del_conf', views.del_conf, name='del_conf'),
+    path('submit', views.submit , name='submit'),
+
 ]

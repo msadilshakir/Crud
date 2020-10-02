@@ -63,4 +63,25 @@ def hide(request):
 def fetch(request):
     fet = request.GET['q']
     st = User.objects.all().filter(Q(name__contains=fet)|Q(email__contains=fet))
-    return render(request, 'add_show.html', {'stu': st, 'fet': fet})
+    fm = Student_registration()
+    return render(request, 'add_show.html', {'stu': st, 'fet': fet,'form':fm})
+
+def del_conf(request):
+    return render(request,'del_conf.html')
+
+def submit(request):
+    if request.method == 'POST':
+        fm = Student_registration(request.POST)
+        if fm.is_valid():
+            nm = fm.cleaned_data['name']
+            em = fm.cleaned_data['email']
+            pwd = fm.cleaned_data['password']
+            reg = User(name=nm, email=em, password=pwd)
+            reg.save()
+            messages.error(request, 'Form Submitted!!')
+            fm = Student_registration()
+    else:
+        fm = Student_registration()
+    stud = User.objects.all().filter()
+    #messages.error(request,'Invalid entry')
+    return render(request, 'add_show.html', {'form': fm, 'stu': stud})
