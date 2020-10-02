@@ -55,5 +55,5 @@ def hide(request):
 
 def fetch(request):
     fet=request.GET['q']
-    st=User.objects.all().filter(name='q')
+    st=User.objects.all().filter(name__unaccent__lower__trigram_similar=fet)
     return render(request,'add_show.html', {'stu':st,'fet':fet})
